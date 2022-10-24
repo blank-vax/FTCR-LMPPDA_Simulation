@@ -12,9 +12,9 @@ Linux Ubuntu 18.04.1 Intel(R) Core(TM) i7-10700 CPU @ 2.90GHz and 4G memory
 |    $D$     | Decimal representation of the upper bound constant for each dimension of data devices collected during aggregation process |   128    |
 |    $z$     | Binary representation of the upper bound constant for each dimension of data devices collected during aggregation process, $z = log_2D$ |    7     |
 |    $k$     |     Number of dimension of data collected by each device     |    10    |
-|    $p$     | The degree of $k$ integrable polynomials introduced in the polynomial CRT for $k-$dimensional data, $deg(d_{ij}(x)) < deg(p_j(x))$ |    9     |
+|    $p$     | The degree of $k$ integrable polynomials introduced in the polynomial CRT for $k-$ dimensional data, $deg(d_{ij}(x)) < deg(p_j(x))$ |    9     |
 |    $q$     | Range of coefficients of the polynomials $T(x)$ and $p(x)$ in the polynomial CRT |   257    |
-|    $s$     | Number of bits of $k$ prime numbers ($q_1,q_2,\dots,q_k$) in number CRT, satisfying $2^s \geq nD \Longrightarrow s \geq \lceil log_2n \rceil+z$ |    12    |
+|    $s$     | Number of bits of $k$ prime numbers ( $q_1,q_2,\dots,q_k$ ) in number CRT, satisfying $2^s \geq nD \Longrightarrow s \geq \lceil log_2n \rceil+z$ |    12    |
 
 
 
@@ -24,7 +24,7 @@ The objects for atomic operation are two mutually prime 100-bit numbers, and the
 
 ![AtomicOperation.PNG](Multidimensional-Transformation-Comparision-Result.assets/1665650705119-dbb7bbb0-473d-4c31-ba17-8ea452c0008a.png)
 
-|              Operation Name               | Operation Time($\mu s$) |
+|              Operation Name               | Operation Time ( $\mu s$ ) |
 | :---------------------------------------: | :---------------------: |
 |   Numerical Multiplication $T_{NMult}$    |           3.0           |
 |       Numerical Division $T_{NDiv}$       |           4.0           |
@@ -39,6 +39,7 @@ The complexity of the remaining operations such as polynomial operations and num
 * Polynomial addition and subtraction
 
   For the addition or subtraction among $l$ polynomials with the degree of $n$, the complexity is:
+  
   $$
   T_{PAdd} = l \cdot n \cdot T_{NAdd}
   $$
@@ -51,6 +52,7 @@ The complexity of the remaining operations such as polynomial operations and num
   * Polynomials division: $T_{PDiv} = (b+1)(a-b+1)\cdot(T_{NMult} + T_{NAdd})$
 
   As the modulo operation between two polynomials can be converted into a variant of the polynomial division operation(that's, **polynomial long division**), so the complexity of polynomials modulo is the same as polynomials division:
+  
   $$
   T_{PMod} = T_{PDiv} = (b+1)(a-b+1) \cdot (T_{NMult} + T_{NAdd})
   $$
