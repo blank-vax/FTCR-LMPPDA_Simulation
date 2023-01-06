@@ -9,7 +9,7 @@ def paramsGeneration():
     dimensionAccount = 10
     dataUpperBound = 7
     primeList = []
-    # 生成k个32比特素数
+    # 生成k个12比特素数
     for i in range(dimensionAccount):
         primeList.append(libnum.generate_prime(12))
     return (smNumber, dimensionAccount, dataUpperBound, primeList)
