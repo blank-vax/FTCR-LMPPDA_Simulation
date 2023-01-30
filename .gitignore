@@ -1,1 +1,10 @@
-.vscode/tasks.json
+.vscode/*
+
+src/FTCR-LMPPDA1.00
+src/atomicComputationComparison/atomicComputationComparison
+src/atomicComputationComparison/curveOperation
+src/atomicComputationComparison/matrixOperation
+src/otherAlgorithmComparison/AES
+src/otherAlgorithmComparison/otherAlgorithmsTest
+
+test/unitTest1.00

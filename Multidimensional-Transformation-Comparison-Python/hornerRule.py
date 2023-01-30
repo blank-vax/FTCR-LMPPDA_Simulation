@@ -1,51 +1,59 @@
+'''
+Author: Blank-vax 15554467517@163.com
+Date: 2023-01-30 01:18:07
+LastEditors: Blank-vax 15554467517@163.com
+LastEditTime: 2023-01-30 11:37:17
+FilePath: /FTCR-LMPPDA_Simulation/Multidimensional-Transformation-Comparison-Python/hornerRule.py
+Description: Efficiency evaluation of Horner's Rule
+'''
 import random
 import gmpy2
 from line_profiler import LineProfiler
 
 
-# 生成评估过程所用参数
+# Parameters generation for evaluation
 def paramsGeneration():
     smNumber = 20
     dimensionAccount = 10
     dataUpperBound = 7
     return (smNumber, dimensionAccount, dataUpperBound)
 
-# 生成评估所用随机原始数据
+# Original random number generation for evaluation
 def dataGeneration(dimensionAccount):
     originDataInSmartMeter = []
     for i in range(dimensionAccount):
         originDataInSmartMeter.append(random.getrandbits(7))
-    # 打印输出智能电表收集的原始数据
+    # Print the original data collected by smart meters
     for i in range(dimensionAccount):
         print(originDataInSmartMeter[i], end = " ")
     return originDataInSmartMeter
 
 
-# 霍纳法则初始化算法
+# Initialization of Horner's Rule
 def HornerRuleInit(smNumber, dataUpperBound, dimensionAccount):
-    # 简化编写,确定R为不大于nD的第一个素数
+    # For simplification, determine R as the first prime number not greater than nD
     nD = smNumber*pow(2,dataUpperBound) - 1
     while True:
-        # 素性检测
+        # Prime test
         if gmpy2.is_prime(nD):
             break
         nD -= 1
     R = nD
     RVector = []
-    # 生成RVector = (R, R^2, R^3, ..., R^k)
+    # Generation of RVector = (R, R^2, R^3, ..., R^k)
     for i in range(dimensionAccount):
         RVector.append(R)
         R = R*nD
     return RVector
 
-# 霍纳法则数据转换算法
+# Data process of Horner's Rule
 def HornerRuleDP(RVector, originDataInSmartMeter, dimensionAccount):
     transformedResult = 0
     for j in range(dimensionAccount):
         transformedResult += RVector[j]*originDataInSmartMeter[j]
     return transformedResult
     
-# 霍纳法则数据恢复算法
+# Data recovery of Horner's Rule
 def HornerRuleDR(RVector, aggregatedOneDimensionData, dimensionAccount):
     multidimensionResultList = []
     X_0 = aggregatedOneDimensionData // RVector[0]
@@ -56,24 +64,24 @@ def HornerRuleDR(RVector, aggregatedOneDimensionData, dimensionAccount):
     
 
 def main():
-    # 生成算法相关参数
+    # Parameters generation of algorithm
     smNumber, dimensionAccount, dataUpperBound = paramsGeneration()
-    # 数值中国剩余定理初始化
+    # Initialization of numerical CRT
     RVector = HornerRuleInit(smNumber=smNumber, dataUpperBound=dataUpperBound, dimensionAccount=dimensionAccount)
-     # 生成smNumber对原始数据并执行数据转换算法
+     # Generation of smNumber and perform data transformation for original data
     aggregatedResult = 0
     for i in range(smNumber):
-        # 生成原始数据
+        # Generation of original data 
         print("Smart Meter " + str(i+1))
         originDataInSmartMeter = dataGeneration(dimensionAccount=dimensionAccount)
         print("\n")
-        # 执行数据维度转换
+        # Data dimensions transformation
         transformedResult = HornerRuleDP(RVector=RVector, originDataInSmartMeter=originDataInSmartMeter, dimensionAccount=dimensionAccount)
-        # 执行单维数据加法
+        # Addition for data of single dimension
         aggregatedResult += transformedResult
-    # 数据维度分离
+    # Data dimension separation
     aggregatedMultidimensinDataList = HornerRuleDR(RVector=RVector, aggregatedOneDimensionData=aggregatedResult, dimensionAccount=dimensionAccount)
-    # 打印聚合后的数据结果 
+    # Print the aggregation result
     for i in range(dimensionAccount):
         print(aggregatedMultidimensinDataList[i])
 

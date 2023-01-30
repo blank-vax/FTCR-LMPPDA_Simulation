@@ -1,9 +1,17 @@
+'''
+Author: Blank-vax 15554467517@163.com
+Date: 2023-01-30 01:18:07
+LastEditors: Blank-vax 15554467517@163.com
+LastEditTime: 2023-01-30 12:03:54
+FilePath: /FTCR-LMPPDA_Simulation/Multidimensional-Transformation-Comparison-Python/superincreasingSequence.py
+Description: Efficiency evaluation for superincreasing sequence operations
+'''
 import random
 import libnum
 from line_profiler import LineProfiler
 
 
-# 生成评估过程所用参数
+# Parameters generation for evaluation
 def paramsGeneration():
     smNumber = 20
     dimensionAccount = 10
@@ -11,17 +19,17 @@ def paramsGeneration():
     q = libnum.generate_prime(128)
     return (smNumber, dimensionAccount, dataUpperBound, q)
 
-# 生成评估所用随机原始数据
+# Random original data generation for evaluation
 def dataGeneration(dimensionAccount):
     originDataInSmartMeter = []
     for i in range(dimensionAccount):
         originDataInSmartMeter.append(random.getrandbits(7))
-    # 打印输出智能电表收集的原始数据
+    # Print original data collected by smart meters
     for i in range(dimensionAccount):
         print(originDataInSmartMeter[i], end = " ")
     return originDataInSmartMeter
 
-# 初始化超递增序列
+# Initialization of superincreasing sequence
 def superincreasingSequenceInit(dimensionAccount, smNumber, dataUpperBound, q):
     superincreasingSequence = []
     sumResult = 0
@@ -32,14 +40,14 @@ def superincreasingSequenceInit(dimensionAccount, smNumber, dataUpperBound, q):
     assert(sumResult <= q)
     return superincreasingSequence
 
-# 数据转换算法
+# Data transformation 
 def superincreasingSequenceDP(superincreasingSequence, origiDataInSmartMeter, dimensionAccount):
     transformedResult = 0
     for i in range(dimensionAccount): 
         transformedResult += superincreasingSequence[i]*origiDataInSmartMeter[i]
     return transformedResult
 
-# 数据还原算法
+# Data recovery
 def superincreasingSequenceDR(dimensionAccount,superincreasingSequence, aggregatedOneDimensinData):
     aggregatedMultiDimensionDataList = [0]*dimensionAccount
     originNumber = aggregatedOneDimensinData
@@ -53,22 +61,22 @@ def superincreasingSequenceDR(dimensionAccount,superincreasingSequence, aggregat
 
 def main():
     smNumber, dimensionAccount, dataUpperBound, q = paramsGeneration()
-    # 初始化超递增序列
+    # Initialization of superincreasing sequence
     superincreasingSequence = superincreasingSequenceInit(dimensionAccount=dimensionAccount, smNumber=smNumber, dataUpperBound=dataUpperBound, q=q)
-    # 生成smNumber对原始数据并执行数据转换算法
+    # Generation of smNumber and perform data transformation for original data
     aggregatedResult = 0
     for i in range(smNumber):
-        # 生成原始数据
+        # Generation of original data
         print("Smart Meter " + str(i+1))
         originDataInSmartMeter = dataGeneration(dimensionAccount=dimensionAccount)
         print("\n")
-        # 执行数据维度转换
+        # Data dimensions transformation
         transformedResult = superincreasingSequenceDP(superincreasingSequence=superincreasingSequence, origiDataInSmartMeter=originDataInSmartMeter, dimensionAccount=dimensionAccount)
-        # 执行单维数据加法
+        # Addition for data of single dimension
         aggregatedResult += transformedResult
-    # 数据维度分离
+    # Data dimension separation
     aggregatedMultidimensinDataList = superincreasingSequenceDR(dimensionAccount=dimensionAccount, superincreasingSequence=superincreasingSequence, aggregatedOneDimensinData=aggregatedResult)
-    # 打印聚合后的数据结果 
+    # Print aggregation result 
     for i in range(dimensionAccount):
         print(aggregatedMultidimensinDataList[i])
     

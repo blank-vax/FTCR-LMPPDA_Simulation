@@ -22,7 +22,7 @@ Linux Ubuntu 18.04.1 Intel(R) Core(TM) i7-10700 CPU @ 2.90GHz and 4G memory
 
 The objects for atomic operation are two mutually prime 100-bit numbers, and the atomic operation computation overhead evaluation results are as follows: 
 
-![AtomicOperation.PNG](Multidimensional-Transformation-Comparision-Result.assets/1665650705119-dbb7bbb0-473d-4c31-ba17-8ea452c0008a.png)
+![AtomicOperation.PNG](Multidimensional-Transformation-Comparison-Result.assets/1665650705119-dbb7bbb0-473d-4c31-ba17-8ea452c0008a.png)
 
 |              Operation Name               | Operation Time ( $\mu s$ ) |
 | :---------------------------------------: | :---------------------: |
@@ -91,31 +91,31 @@ The simulation results for 5 different dimension transformation algorithms on ou
 
   Total running time: 2.682 ms
 
-  ![superincreasingSequenceTotal.PNG](Multidimensional-Transformation-Comparision-Result.assets/1665666592063-6bdceede-2939-437e-89b0-75264c23a521.png)
+  ![superincreasingSequenceTotal.PNG](Multidimensional-Transformation-Comparison-Result.assets/1665666592063-6bdceede-2939-437e-89b0-75264c23a521.png)
 
 * Number CRT
 
   Total running time: 2.672 ms
 
-  ![numberCRTTotal.PNG](Multidimensional-Transformation-Comparision-Result.assets/1665994839529-72011796-d3b0-4b35-b1c2-51f976bfdcb2.png)
+  ![numberCRTTotal.PNG](Multidimensional-Transformation-Comparison-Result.assets/1665994839529-72011796-d3b0-4b35-b1c2-51f976bfdcb2.png)
 
 * Polynomial CRT
 
   Total running time: 131.002 ms
 
-  ![polyCRTTotal.PNG](Multidimensional-Transformation-Comparision-Result.assets/1666169091164-29729e29-46a6-4bb1-b69e-7dac26c4f839.png)
+  ![polyCRTTotal.PNG](Multidimensional-Transformation-Comparison-Result.assets/1666169091164-29729e29-46a6-4bb1-b69e-7dac26c4f839.png)
 
 * Horner's Rule
 
   Total running time: 1.210 ms
 
-  ![hornerRuleTotal.PNG](Multidimensional-Transformation-Comparision-Result.assets/1665998033527-b83e1471-9891-452c-a049-60a0150ae9ce.png)
+  ![hornerRuleTotal.PNG](Multidimensional-Transformation-Comparison-Result.assets/1665998033527-b83e1471-9891-452c-a049-60a0150ae9ce.png)
 
 * Data Embedding
 
   Total running time: 1.485 ms
 
-  ![dataInsertationTotal.PNG](Multidimensional-Transformation-Comparision-Result.assets/1666012404130-b9cd9e11-acce-4db7-a562-f613a710d857.png)
+  ![dataInsertationTotal.PNG](Multidimensional-Transformation-Comparison-Result.assets/1666012404130-b9cd9e11-acce-4db7-a562-f613a710d857.png)
 
 Computation overhead in each stage of 5 dimension transformation algorithms as follows:
 

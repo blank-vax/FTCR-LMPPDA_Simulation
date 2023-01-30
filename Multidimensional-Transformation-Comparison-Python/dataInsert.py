@@ -1,9 +1,18 @@
+'''
+Author: Blank-vax 15554467517@163.com
+Date: 2023-01-30 01:18:07
+LastEditors: Blank-vax 15554467517@163.com
+LastEditTime: 2023-01-30 11:44:14
+FilePath: /FTCR-LMPPDA_Simulation/Multidimensional-Transformation-Comparison-Python/dataInsert.py
+Description: Efficiency evaluation for data embedding and data extraction operations
+'''
+
 import random
 import math
 from line_profiler import LineProfiler
 
 
-# 生成评估过程所用参数
+# Paramerters generation for evaluation
 def paramsGeneration():
     smNumber = 20
     dimensionAccount = 10
@@ -12,60 +21,60 @@ def paramsGeneration():
     # maxBits = 12
     return (smNumber, dimensionAccount, dataUpperBound, maxBits)
 
-# 生成评估所用随机原始数据
+# Random original data generation for evaluation
 def dataGeneration(dimensionAccount):
     originDataInSmartMeter = []
     for i in range(dimensionAccount):
         originDataInSmartMeter.append(random.getrandbits(7))
-    # 打印输出智能电表收集的原始数据
+    # Print the original data collected by smart meters
     for i in range(dimensionAccount):
         print(originDataInSmartMeter[i], end = " ")
     return originDataInSmartMeter
 
-# 数据嵌入过程
+# Data embedding process
 def dataInsertDP(maxBits, dimensionAccount, originDataInSmartMeter):
     transformedResult = 0
     for index in range(dimensionAccount):
-        # 将十进制数据转换为二进制数据
+        # Convert decimal data to binary data
         binaryString = bin(originDataInSmartMeter[index])[2:]
-        # 完成二进制级联
+        # Binary cascade
         binaryString += "0"*(maxBits*(index))
-        # 还原为十进制数据
+        # Decimal data recovery
         transformedResult += int(binaryString, 2)
     return transformedResult
 
-# 数据还原过程
+# Data extraction process
 def dataInsertDR(aggregatedResult, dimensionAccount, maxBits):
     multidimensionAggregatedDataList = []
-    # 二进制编码
+    # Binary coding
     binaryString = bin(aggregatedResult)[2:]
-    # 从低位到高位循环遍历
+    # Iteration from low to high
     for index in range(dimensionAccount):
         theta1 = maxBits*(index+1)
         theta2 = maxBits*index
-        # 截取对应维度二进制数据
+        # Intercept binary data in the corresponding location
         blockedBinaryString = binaryString[theta2: theta1-1]
-        # 转换为十进制
+        # Transformed to decimal data 
         multidimensionAggregatedDataList.append(int(blockedBinaryString, 2))
     return multidimensionAggregatedDataList
 
 def main():
-    # 生成算法相关参数
+    # Parameters generation
     smNumber, dimensionAccount, dataUpperBound, maxBits = paramsGeneration()
-     # 生成smNumber对原始数据并执行数据转换算法
+    # Generation of smNumber and perform data transformation for original data
     aggregatedResult = 0
     for i in range(smNumber):
-        # 生成原始数据
+        # Generation of original data 
         print("Smart Meter " + str(i+1))
         originDataInSmartMeter = dataGeneration(dimensionAccount=dimensionAccount)
         print("\n")
-        # 执行数据嵌入
+        # Perform data embedding
         transformedResult = dataInsertDP(maxBits=maxBits, dimensionAccount=dimensionAccount, originDataInSmartMeter=originDataInSmartMeter)
-        # 执行单维数据加法
+        # Perform addition operations for data of single dimention
         aggregatedResult += transformedResult
-    # 嵌入数据提取
+    # Data extraction of embedded data
     aggregatedMultidimensinDataList = dataInsertDR(aggregatedResult=aggregatedResult, dimensionAccount=dimensionAccount, maxBits=maxBits)
-    # 打印聚合后的数据结果 
+    # Print aggregation result
     for i in range(dimensionAccount):
         print(aggregatedMultidimensinDataList[i])
 

@@ -1,11 +1,20 @@
+/*
+ * @Author: Blank-vax 15554467517@163.com
+ * @Date: 2023-01-30 01:18:07
+ * @LastEditors: Blank-vax 15554467517@163.com
+ * @LastEditTime: 2023-01-30 11:59:22
+ * @FilePath: /FTCR-LMPPDA_Simulation/Multidimensional-Transformation-Comparison-Python/polyCRT.sage
+ * @Description: Efficiency evaluation for polynomial CRT operations
+ */
+
 #coding=utf-8
 import random
 from line_profiler import LineProfiler
-# 引入sagemath所有相关库
+# Import all the related library from sagemath
 from sage.all import *
 
 
-# 生成评估过程所用参数
+# Parameters generation for evaluation
 def paramsGeneration():
     smNumber = 20
     dimensionAccount = 10
@@ -16,18 +25,18 @@ def paramsGeneration():
     R.<x> = PolynomialRing(GF(primeQ, 'a'))
     return (smNumber, dimensionAccount, dataUpperBound, R)
 
-# 生成评估所用随机原始数据
+# Random original data generation for evaluation
 def dataGeneration(dimensionAccount):
     import random
     originDataInSmartMeter = []
     for i in range(dimensionAccount):
         originDataInSmartMeter.append(random.getrandbits(7))
-    # 打印输出智能电表收集的原始数据
+    # Print the original data collected by smart meters
     for i in range(dimensionAccount):
         print(originDataInSmartMeter[i])
     return originDataInSmartMeter
 
-# 生成多项式向量TVector
+# Polynomial vector TVector generation
 def polynomialFractionDecomposition(QInverse, PVector, dimensionAccount):
     TVector = []
     fractionDecompositionResult = (QInverse).partial_fraction_decomposition(x)
@@ -36,34 +45,34 @@ def polynomialFractionDecomposition(QInverse, PVector, dimensionAccount):
     return TVector
     
 
-# 多项式初始化阶段,生成多项式向量QVector, TVector, PVector
+# Polynomial initialization stage, generation of polynomial vectors QVector, TVector and PVector
 def polynomialCRTInit(ringR, dataUpperBound, dimensionAccount):
     PVector = []
     QVector = []
     R.<t> = PolynomialRing(GF(2, 'a'))
-    # 生成k个不可约多项式, 最高系数项为1的不可约多项式必互素
+    # Generate k integrable polynomials, the integrable polynomials with the highest coefficient term of 1 must be coprime
     for index in range(dimensionAccount):
         PVector.append(ringR.irreducible_element(dataUpperBound+1, algorithm='random'))
-    # 多项式列表排序
+    # Polynomial list sorting
     PVector.sort()
-    # 计算k个不可约多项式乘积
+    # Compute the product of k integrable polynomials
     Q = 1*t^0
     for index2 in range(dimensionAccount):
         Q *= PVector[index2]
-    # 计算Qi(x)
+    # Compute Qi(x)
     for index3 in range(dimensionAccount):
         QVector.append(Q // PVector[index3])
-    # 计算1/Q(x)
+    # Compute 1/Q(x)
     QInverse = 1 / Q
     TVector = polynomialFractionDecomposition(QInverse=QInverse, PVector=PVector, dimensionAccount=dimensionAccount)
     return (QVector, TVector, PVector)
     
-# 数据转换阶段, 执行多项式乘法与加法
+# Data conversion phase, performing polynomial multiplication and addition
 def polynomialCRTDP(ringR, dimensionAccount, originDataInSmartMeter, TVector, QVector):
     R.<x> = PolynomialRing(GF(2, 'a'))
     oneDimensionPolynomial = 0*x^0
     oneDimensionPolynomial = oneDimensionPolynomial.change_ring(ringR)
-    # 将多维度数据转换为单维度数据
+    # Data transformation from multidimensional data to single dimension data 
     for index in range(dimensionAccount):
         dataPolynomialMapped = 0*x^0
         power = 0
@@ -75,14 +84,14 @@ def polynomialCRTDP(ringR, dimensionAccount, originDataInSmartMeter, TVector, QV
         oneDimensionPolynomial += dataPolynomialMapped*TVector[index]*QVector[index]
     return oneDimensionPolynomial
 
-# 将多项式还原为原始数据
+# Reduction of polynomials to original data
 def constructDecimalDataWithPolynomial(polynomialResult):
     polynomialList = polynomialResult.list()
     polynomialListString = "".join([str(x) for x in polynomialList])
     decimalData = int(polynomialListString, 2)
     return decimalData
     
-# 多维数据还原阶段, 执行多项式模操作
+# Multidimensional data reduction phase, performing polynomial modulo operations
 def polynomialCRTDR(PVector, aggregatedResultPolynomial, dimensionAccount):
     multidimensionDataResults = []
     for index in range(dimensionAccount):
@@ -92,26 +101,26 @@ def polynomialCRTDR(PVector, aggregatedResultPolynomial, dimensionAccount):
     return multidimensionDataResults    
 
 def main():
-    # 生成算法相关参数
+    # Parameters generation
     smNumber, dimensionAccount, dataUpperBound, R = paramsGeneration()
-    # 多项式中国剩余定理初始化
+    # Initialization of polynomial CRT
     QVector, TVector, PVector = polynomialCRTInit(ringR=R, dataUpperBound=dataUpperBound, dimensionAccount=dimensionAccount)
-    # 生成smNumber对原始数据并执行数据转换算法
+    # Generation of smNumber and perform data transformation for original data
     R2.<x> = PolynomialRing(GF(2, 'a'))
     aggregatedResult = 0*t^0
     aggregatedResult = aggregatedResult.change_ring(R)
     for i in range(smNumber):
-        # 生成原始数据
+        # Original data generation
         print("Smart Meter " + str(i+1))
         originDataInSmartMeter = dataGeneration(dimensionAccount=dimensionAccount)
         print("\n")
-        # 执行数据维度转换
+        # Data dimensions transformation
         transformedResult = polynomialCRTDP(ringR=R, dimensionAccount=dimensionAccount, originDataInSmartMeter=originDataInSmartMeter, TVector=TVector, QVector=QVector)
-        # 执行单维数据加法
+        # Addition operation for single dimension data 
         aggregatedResult += transformedResult
-    # 数据维度分离
+    # Data dimension separation
     aggregatedMultidimensinDataList = polynomialCRTDR(PVector=PVector, aggregatedResultPolynomial=aggregatedResult, dimensionAccount=dimensionAccount)
-    # 打印聚合后的数据结果 
+    # Print aggregation results
     for i in range(dimensionAccount):
         print(aggregatedMultidimensinDataList[i])
 

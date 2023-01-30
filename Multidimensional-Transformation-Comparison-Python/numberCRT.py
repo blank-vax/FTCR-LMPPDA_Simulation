@@ -1,34 +1,42 @@
+'''
+Author: Blank-vax 15554467517@163.com
+Date: 2023-01-30 01:18:07
+LastEditors: Blank-vax 15554467517@163.com
+LastEditTime: 2023-01-30 11:46:43
+FilePath: /FTCR-LMPPDA_Simulation/Multidimensional-Transformation-Comparison-Python/numberCRT.py
+Description: Efficiency evaluation of numerical CRT operations
+'''
 import random
 import libnum
 import gmpy2
 from line_profiler import LineProfiler
 
-# 生成评估过程所用参数
+# Parameters generation for evaluation
 def paramsGeneration():
     smNumber = 20
     dimensionAccount = 10
     dataUpperBound = 7
     primeList = []
-    # 生成k个12比特素数
+    # Generation of k primes with 12 bits
     for i in range(dimensionAccount):
         primeList.append(libnum.generate_prime(12))
     return (smNumber, dimensionAccount, dataUpperBound, primeList)
 
-# 生成评估所用随机原始数据
+# Random original data generation for evaluation
 def dataGeneration(dimensionAccount):
     originDataInSmartMeter = []
     for i in range(dimensionAccount):
         originDataInSmartMeter.append(random.getrandbits(7))
-    # 打印输出智能电表收集的原始数据
+    # Print the original data collected by smart meters
     for i in range(dimensionAccount):
         print(originDataInSmartMeter[i], end = " ")
     return originDataInSmartMeter
 
-# 数值中国剩余定理初始化,生成alphaVector
+# Initialization of numerical CRT, generation of alphaVector
 def numberCRTInit(dimensionAccount, primeList):
     alphaVector = []
     Q = 1
-    # 生成alpha向量
+    # Generation of the alpha vector
     for i in range(dimensionAccount):
         Q *= primeList[i]
     for i in range(dimensionAccount):
@@ -37,7 +45,7 @@ def numberCRTInit(dimensionAccount, primeList):
         alphaVector.append(Qi*QiInverse)
     return (alphaVector, Q)
 
-# 数值中国剩余定理数据转换
+# Data process in numerical CRT
 def numberCRTDP(dimensionAccount, originDataInSmartMeter, alphaVector, Q):
     oneDimensionData = 0
     for i in range(dimensionAccount):
@@ -45,7 +53,7 @@ def numberCRTDP(dimensionAccount, originDataInSmartMeter, alphaVector, Q):
     oneDimensionData = oneDimensionData % Q
     return oneDimensionData
 
-# 数值中国剩余定理数据恢复
+# Data recovery in numerical CRT
 def numberCRTDR(aggregatedOneDimensionData, dimensionAccount, Q, primeList):
     aggregatedMultiDimensionDataList = []
     for index in range(dimensionAccount):
@@ -54,24 +62,24 @@ def numberCRTDR(aggregatedOneDimensionData, dimensionAccount, Q, primeList):
 
 
 def main():
-    # 生成算法相关参数
+    # Parameters generation 
     smNumber, dimensionAccount, dataUpperBound, primeList = paramsGeneration()
-    # 数值中国剩余定理初始化
+    # Initialization of numerical CRT
     alphaVector, Q = numberCRTInit(dimensionAccount=dimensionAccount, primeList=primeList)
-     # 生成smNumber对原始数据并执行数据转换算法
+    # Generation of smNumber and perform data transformation for original data
     aggregatedResult = 0
     for i in range(smNumber):
-        # 生成原始数据
+        # Generation of original data
         print("Smart Meter " + str(i+1))
         originDataInSmartMeter = dataGeneration(dimensionAccount=dimensionAccount)
         print("\n")
-        # 执行数据维度转换
+        # Perform dimensions transformation operations
         transformedResult = numberCRTDP(dimensionAccount=dimensionAccount, originDataInSmartMeter=originDataInSmartMeter, alphaVector=alphaVector, Q=Q)
-        # 执行单维数据加法
+        # Addition for data of single dimension 
         aggregatedResult += transformedResult
-    # 数据维度分离
+    # Data dimension separation
     aggregatedMultidimensinDataList = numberCRTDR(aggregatedOneDimensionData=aggregatedResult, dimensionAccount=dimensionAccount, Q=Q, primeList=primeList)
-    # 打印聚合后的数据结果 
+    # Print aggregation result
     for i in range(dimensionAccount):
         print(aggregatedMultidimensinDataList[i])
 

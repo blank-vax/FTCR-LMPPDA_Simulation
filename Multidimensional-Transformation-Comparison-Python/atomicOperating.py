@@ -1,14 +1,21 @@
-# 首先评估原子操作效率开销,以100bits操作数为例
+'''
+Author: Blank-vax 15554467517@163.com
+Date: 2023-01-30 01:18:07
+LastEditors: Blank-vax 15554467517@163.com
+LastEditTime: 2023-01-30 11:24:19
+FilePath: /FTCR-LMPPDA_Simulation/Multidimensional-Transformation-Comparison-Python/atomicOperating.py
+Description: Efficiency evaluation of atomic operations, utilizing the 100 bits operand as an example
+'''
 import random
 from line_profiler import LineProfiler
 
-# 数字互素判断
+# Numerical heterogeneity judgment
 def gcd(a, b) :
     while a != 0:
         a, b = b%a, a
     return b
 
-# 生成互素的两个100比特数字
+# Generate two 100-bit numbers that are coprime
 def generateCoprimeNumber():
     k = 100
     while True:
@@ -16,31 +23,31 @@ def generateCoprimeNumber():
         operationNumber2 = random.getrandbits(100)
         if gcd(operationNumber1, operationNumber2) == 1:
             break
-    # 保证operationNumber1 >= operationNumber2
+    # Ensure operationNumber1 >= operationNumber2
     if operationNumber1 < operationNumber2:
         operationNumber1, operationNumber2 = operationNumber2, operationNumber1
     return operationNumber1, operationNumber2
 
-# 加法/减法运算
+# Addition and subtraction
 def addOperation(operationNumber1, operationNumber2):
     addResult = operationNumber1 + operationNumber2
 
-# 乘法运算
+# Multiplication
 def multOperation(operationNumber1, operationNumber2):
     multiplyResult = operationNumber1*operationNumber2
     return multiplyResult
 
-# 除法运算
+# Division
 def divOperation(operationNumber1, operationNumber2):
     divisionResult = operationNumber1/operationNumber2
     return divisionResult
     
-# 模运算
+# Modulo
 def modOperation(operationNumber1, operationNumber2):
     moduleResult = operationNumber1 % operationNumber2
     return moduleResult
 
-# 辗转相除法求模逆
+# Rollover division method for modulo inverse
 def modInverseOperation(operationNumber2, operationNumber1):
     assert gcd(operationNumber2, operationNumber1) == 1
     u1, u2, u3 = 1, 0, operationNumber2
