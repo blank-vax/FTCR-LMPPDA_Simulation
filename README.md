@@ -2,9 +2,9 @@
 ### src
 #### atomicComputationComparison
 
-- `curveOperation.h`, `curveOperation.c`: number operations and curve operations efficiency evaluation, the number to be operated is a random number within 1000, introducing the $Type \ A$curve in the `PBC` library to complete the curve operations efficiency evaluation.
+- `curveOperation.h`, `curveOperation.c`: number operations and curve operations efficiency evaluation, the number to be operated is a random number within 1000, introducing the $Type \ A$ curve in the `PBC` library to complete the curve operations efficiency evaluation.
 - `fips202.h`, `fips202.c`: hash operations implementation reference, based on the public domain implementation in `crypto_hash/keccakc512/simple/` from [Keccakc512Reference](http://bench.cr.yp.to/supercop.html) by Ronny Van Keer and the public domain "TweetFips202" implementation from [Fips202Reference](https://twitter.com/tweetfips202) by Gilles Van Assche, Daniel J. Bernstein, and Peter Schwabe.
-- `matrixOperation.h`, `matrixOperation.h`: evaluate the effciency of matrix/vector addition/multiplication operations with the help of the `Eigen`library, focusing on the efficiency of atomic operations in the 18' Abdallah et al. scheme and the 21' Qian et al. scheme.
+- `matrixOperation.h`, `matrixOperation.h`: evaluate the effciency of matrix/vector addition/multiplication operations with the help of the `Eigen` library, focusing on the efficiency of atomic operations in the 18' Abdallah et al. scheme and the 21' Qian et al. scheme.
 - `atomicCompuationComparison.c`/`atomicComputationComparison.cpp`: the main function of the atomic operation evaluation, which can be written to adapt the **cpp file** to the matrix operations evaluation function to complete the evaluation of **the efficiency of matrix operations** or the **C file** to adapt the curve operations evaluation function to complete the evaluation of **the efficiency of curve operations**.
 
 Complie Options: 
@@ -13,7 +13,7 @@ Complie Options:
 - C file: `gcc -fdiagnostics-color=always -g ${workspaceFolder}/src/atomicComputationComparison/*.c -lgmp -lpbc -I/usr/local/include/pbc -o ${fileDirname}/${fileBasenameNoExtension}`, where the include path after the option `-I` could be replaced by your own include path.
 #### otherAlgorithmComparison
 
-- `AES.h`, `AES.c`: the C implementation of performance evaluation of $AES-256$symmetric algorithm with the help of `openssl/aes.h`.
+- `AES.h`, `AES.c`: the C implementation of performance evaluation of $AES-256$ symmetric algorithm with the help of `openssl/aes.h`.
 - `otherAlgorithmsTest.c`: the entry function for AES efficiency evaluation function.
 
 Compile Options:
@@ -25,11 +25,11 @@ Compile Options:
 - `Dilithium.h`, `Dilithium.c`: the implementation of Dilithium signature with the help of `liboqs` library, including **the key generation, signature generation and verification process**.
 - `fips202.h`, `fips202.c`:  hash operations implementation reference.
 - `Fisher-YatesShuffle.h`, `Fisher-YatesShuffle.c`: the implementation of FYS shuffle for the input array.
-- `gaussianSampling.h`, `gaussianSampling.c`: **discrete Gaussian sampling operations** to figure out the coefficients of sampled polynomials, whose coefficients are located in $[4,6)$.
+- `gaussianSampling.h`, `gaussianSampling.c`: **discrete Gaussian sampling operations** to figure out the coefficients of sampled polynomials, whose coefficients are located in $[4,6)$ .
 - `numberCRT.h`, `numberCRT.c`: the implementation of Chinese Remainder Theorem for numbers, including **the initialization stage, the data process stage and the data recovery stage**. **TODO**: import `Miracl`library to achieve the operations on large number.
-- `params.h`: parameters in FTCR-LMPPDA scheme, including parameters for $PH-NTRU$, parameters for $Dilithium$and other general limitiations to ensure proper system operations.
-- `PH-NTRU.h`, `PH-NTRU.c`: the implementation of $PH-NTRU$cryptosystem, including **the key generation(public key & private key), the encryption process and related decryption process, finally the homomorphic addition operation**.
--  `poly.h`, `poly.c`: the implementation for polynomials defination and operations utilized in $PH-NTRU$implementation and throughout the whole scheme.
+- `params.h`: parameters in FTCR-LMPPDA scheme, including parameters for $PH-NTRU$ , parameters for $Dilithium$ and other general limitiations to ensure proper system operations.
+- `PH-NTRU.h`, `PH-NTRU.c`: the implementation of $PH-NTRU$ cryptosystem, including **the key generation(public key & private key), the encryption process and related decryption process, finally the homomorphic addition operation**.
+-  `poly.h`, `poly.c`: the implementation for polynomials defination and operations utilized in $PH-NTRU$ implementation and throughout the whole scheme.
 - `randombytes.h`, `randombytes.c`: random bytes generation algorithm for specific bytes length.
 - `zeroSumRandomNumber.h`, `zeroSumRandomNumber.c`: the implementation of the generation and update process of zero-sum random number designed for the collusion resistance of different participants.
 
@@ -72,7 +72,7 @@ The final executable file could be found as `FTCR-LMPPDA1.00` in the path `/src/
 - `testDGS.h`, `testDGS.c`: the tests for discrete Gaussian distribution sampler.
 - `testDilithium.h`, `testDilithium.c`: the tests and usage of **Dilithium signature algorithm**.
 - `testNumberCRT.h`, `testNumberCRT.c`: the tests and usage of **Chinese Remainder Theorem for numerical data**.
-- `testPH-NTRU.h`, `testPH-NTRU.c`: the tests and usage of $PH-NTRU$**cryptosystem**.
+- `testPH-NTRU.h`, `testPH-NTRU.c`: the tests and usage of $PH-NTRU$ **cryptosystem**.
 - `testZeroSumRandomNumber.h`, `testZeroSumRandomNumber.c`: the tests and usage of **the generation, distribution and update of the zero-sum random numbers**.
 
 Compile Options:
@@ -111,7 +111,7 @@ clean:
 ```
   The final executable file could be found as `unitTest1.00` in the path `/test/`.
 ### Multidimensional-Transformation-Comparison-Python
-This folder holds Python and Sage scripts for evaluating the effciency of operations in **five types of transformation algorithms (data embedding and extraction, Horner's Rule, numerical Chinese Remainder Theorem, polynomial Chinese Remainder Theorem and super-increasing sequence) utilized between multidimensional data and single dimensional data**. The specific analysis results are stored in `**/Multidimensional-Transformation-Comparison-Python/Multidimensional-Transformation-Comparision-Result.md**`.
+This folder holds Python and Sage scripts for evaluating the effciency of operations in **five types of transformation algorithms (data embedding and extraction, Horner's Rule, numerical Chinese Remainder Theorem, polynomial Chinese Remainder Theorem and super-increasing sequence) utilized between multidimensional data and single dimensional data**. The specific analysis results are stored in `/Multidimensional-Transformation-Comparison-Python/Multidimensional-Transformation-Comparision-Result.md`.
 
 - `atomicOperating.py`: the efficiency evaluation of atomic operations including **addition, multiplication, division, modular and modular inverse** with the help of `line_profiler` library in Python.
 - `dataInsert.py`: the efficiency evaluation of data embedding and extraction operations, including **data embedding and data extraction**.
@@ -123,7 +123,7 @@ This folder holds Python and Sage scripts for evaluating the effciency of operat
 ## Quick Start
 
 1. Protocol Construction
-- To build the FTCR-LMPPDA raw protocol, download the `liboqs` library and execute the compile option, **placing the compiled generated header files under** `**/usr/include/**`** and the library files under **`**/usr/local/lib**`.
+- To build the FTCR-LMPPDA raw protocol, download the `liboqs` library and execute the compile option, **placing the compiled generated header files under** `/usr/include/`** and the library files under **`/usr/local/lib`.
 - Execute `make` command under `/src/`, after compile and link operations, the executable file `FTCR-LMPPDA1.00` could be found in `/src/`.
 2. Unit Test
 
