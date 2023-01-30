@@ -72,7 +72,7 @@ The final executable file could be found as `FTCR-LMPPDA1.00` in the path `/src/
 - `testDGS.h`, `testDGS.c`: the tests for discrete Gaussian distribution sampler.
 - `testDilithium.h`, `testDilithium.c`: the tests and usage of **Dilithium signature algorithm**.
 - `testNumberCRT.h`, `testNumberCRT.c`: the tests and usage of **Chinese Remainder Theorem for numerical data**.
-- `testPH-NTRU.h`, `testPH-NTRU.c`: the tests and usage of $\bold{PH-NTRU}$**cryptosystem**.
+- `testPH-NTRU.h`, `testPH-NTRU.c`: the tests and usage of $PH-NTRU$**cryptosystem**.
 - `testZeroSumRandomNumber.h`, `testZeroSumRandomNumber.c`: the tests and usage of **the generation, distribution and update of the zero-sum random numbers**.
 
 Compile Options:
