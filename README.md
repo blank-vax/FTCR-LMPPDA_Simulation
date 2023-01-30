@@ -123,7 +123,7 @@ This folder holds Python and Sage scripts for evaluating the effciency of operat
 ## Quick Start
 
 1. Protocol Construction
-- To build the FTCR-LMPPDA raw protocol, download the `liboqs` library and execute the compile option, **placing the compiled generated header files under** `/usr/include/`** and the library files under **`/usr/local/lib`.
+- To build the FTCR-LMPPDA raw protocol, download the `liboqs` library and execute the compile option, **placing the compiled generated header files under** `/usr/include/` **and the library files under** `/usr/local/lib`.
 - Execute `make` command under `/src/`, after compile and link operations, the executable file `FTCR-LMPPDA1.00` could be found in `/src/`.
 2. Unit Test
 
