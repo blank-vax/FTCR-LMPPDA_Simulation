@@ -77,7 +77,7 @@ The final executable file could be found as `FTCR-LMPPDA1.00` in the path `/src/
 
 Compile Options:
 ```makefile
-# Makefile for the test process for all unit, including discrete Gaussian Sampler, Dilihtium signature, numberCRT, PH-NTRU encryption, polynomial operations, 
+# Makefile for the test process for all unit, including discrete Gaussian Sampler, Dilithium signature, numberCRT, PH-NTRU encryption, polynomial operations, 
 # generation, distribution and update of zero-sum random numbers
 VERSION =1.00
 CC =gcc
@@ -128,6 +128,41 @@ This folder holds Python and Sage scripts for evaluating the effciency of operat
 2. Unit Test
 
 To test the operation of each module of the protocol, execute `make` command in `/test/` after completing the installation of `liboqs` library, after complie and link operations, the executable file `unitTest1.00` could be found in `/test/`.
+3. Crosscompiling for Raspberry Pi
+
+To build the FTCR-LMPPDA raw protocol in the Raspberry Pi development board with the pre-installation of Ubuntu20.04 system, first the re-compile of `liboqs` library with cross-compiling method is needed. Go to the SSH interface and utilize the command `lscpu` to view the architecture information. After obtaining the architecture information, take `aarch64` as an example, download the corresponding gcc compiler on Ubuntu virtual machine: `sudo apt-get install gcc-aarch64-linux-gnu`. Modify `liboqs/.CMake/toolchain_rasppi.cmake` as follow, which is utilized to generate the cmake configuration file for cross-compiling the ARM architecture libraries on Linux system.
+
+```cmake
+set(CMAKE_SYSTEM_NAME Linux)
+set(CMAKE_SYSTEM_PROCESSOR aarch64)
+set(CMAKE_CROSSCOMPILING ON)
+
+set(CMAKE_C_COMPILER aarch64-linux-gnu-gcc)
+
+set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
+set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
+set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
+set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)
+
+add definitions( -DOQS_USE_RASPBERRY_PI)
+
+```
+Modify the `CMAKE_SYSTEM_PROCESSOR` and `CMAKE_C_COMPILER` setting options according to the architecture of Raspberry Pi and corresponding C compiler. Then execute the following commands in `/build/` directory:
+```shell
+cmake -GNinja -DCMAKE_TOOLCHAIN_FILE=../.CMake/toolchain_rasppi.cmake -DOQS_USE_OPENSSL=OFF -DBUILD_SHARED_LIBS=ON ..
+cmake ..
+ninja
+sudo ninja install
+
+```
+Copy all the dynamic link libraries from the generated `/lib/` folder to the Raspberry Pi and execute the following commands:
+```shell
+cd ./lib && sudo cp ./liboqs.* /usr/local/lib
+export LD_LIBRARY_PATH=/usr/local/lib/:$LD_LIBRARY_PATH
+make
+
+```
+Attention: delete the `cpucycles.h` and `cpucycles.c` files in order for the normal operations of our protocol in the Raspberry Pi.
 ## Efficiency Evaluation
 ### Evaluation Setting
 | **Entity** | **Configuration** |
