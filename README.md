@@ -168,9 +168,9 @@ Attention: delete the `cpucycles.h` and `cpucycles.c` files in order for the nor
 ### Evaluation Setting
 | **Entity** | **Configuration** |
 | --- | --- |
-| Raspberry Pi |  |
+| Raspberry Pi |  Ubuntu 20.04 BroadcomBCM271 1BO(CortexA-72) 1.5GHz CPU and 2GB RAM |
 | PC | Linux Ubuntu 18.04.1 Intel(R) Core(TM) i7-10700 CPU @ 2.90GHz and 4G memory |
-| Aliyun Cloud Server |  |
+| Aliyun Cloud Server | Ubuntu 18.04 Intel(R) Xeon(R) Platinum 8396HC 3.30GHz CPU and 16GB RAM |
 
 ### Results & Conclusion
 
